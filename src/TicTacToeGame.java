@@ -1,3 +1,4 @@
+import controller.GameController;
 import model.*;
 
 import java.util.*;
@@ -48,20 +49,24 @@ public class TicTacToeGame {
             players.add(player);
         }
 
-        Game game = Game.getBuilder()
-                .setDimension(dimension)
-                .setPlayers(players)
-                .build();
+//        Game game = Game.getBuilder()
+//                .setDimension(dimension)
+//                .setPlayers(players)
+//                .build();
 
-        while(game.getGameStatus() == GameStatus.INPROGRESS) {
+        GameController gameController = new GameController();
+
+        Game game = gameController.createGame(dimension, players);
+
+        while(gameController.getGameStatus(game) == GameStatus.INPROGRESS) {
             // TODO play the game
 
             break;
         }
-        if(game.getGameStatus() == GameStatus.DRAW) {
+        if(gameController.getGameStatus(game) == GameStatus.DRAW) {
             System.out.println("Game has drawn");
         } else {
-            System.out.println("Game has won by : " +game.getWinningPlayer());
+            System.out.println("Game has won by : " +gameController.getWinningPlayer(game));
         }
     }
 }
