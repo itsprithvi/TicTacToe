@@ -1,6 +1,8 @@
 package model;
 
 import exceptions.InvalidGameDimensionException;
+import strategy.GameWinningStrategy;
+import strategy.OrderOneWinningStrategy;
 
 import java.util.*;
 public class Game {
@@ -10,6 +12,7 @@ public class Game {
     private GameStatus gameStatus;
     private int nextPlayerIndex;
     private Player winningPlayer;
+    private GameWinningStrategy gameWinningStrategy;
 
     public Board getBoard() {
         return board;
@@ -59,8 +62,42 @@ public class Game {
         this.winningPlayer = winningPlayer;
     }
 
+    public GameWinningStrategy getGameWinningStrategy() {
+        return gameWinningStrategy;
+    }
+
+    public void setGameWinningStrategy(GameWinningStrategy gameWinningStrategy) {
+        this.gameWinningStrategy = gameWinningStrategy;
+    }
+
     public static Builder getBuilder() {
         return new Builder();
+    }
+
+    public void makeNextMove() {
+        Player playerWhoMoveItis = players.get(nextPlayerIndex);
+        System.out.println("It is " +playerWhoMoveItis.getName() + "'s turn");
+
+        Move move = playerWhoMoveItis.decideMove();
+
+        int row = move.getCell().getRow();
+        int col = move.getCell().getCol();
+
+        if(board.getBoard().get(row).get(col).getCellState().equals(CellState.EMPTY)) {
+            board.applyMove(move);
+            moves.add(move);
+
+            // check winner
+            if(gameWinningStrategy.checkWinner(board, move)) {
+                gameStatus = GameStatus.ENDED;
+                winningPlayer = playerWhoMoveItis;
+            }
+
+            nextPlayerIndex += 1;
+            nextPlayerIndex %= players.size();
+        } else {
+            // throw an exception
+        }
     }
 
 
@@ -91,6 +128,8 @@ public class Game {
             game.setPlayers(players);
             game.setMoves(new LinkedList<>());
             game.setNextPlayerIndex(0);
+            game.setGameStatus(GameStatus.INPROGRESS);
+            game.setGameWinningStrategy(new OrderOneWinningStrategy(dimension));
 
 
             return game;
