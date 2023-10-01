@@ -30,24 +30,21 @@ public class OrderOneWinningStrategy implements GameWinningStrategy{
 
         //Updating the row values
         if(!rowSymbolCounts.get(row).containsKey(symbol)) {
-            System.out.println("Row hashmap is called...");
             rowSymbolCounts.get(row).put(symbol, 0);
         }
         // update the value by one if the same row having the character...
         rowSymbolCounts.get(row).put(symbol, rowSymbolCounts.get(row).get(symbol)+1);
 
         //Updating the columns values
-        if(!colSymbolCounts.get(row).containsKey(symbol)) {
-            System.out.println("Col hashmap is called...");
-            colSymbolCounts.get(row).put(symbol, 0);
+        if(!colSymbolCounts.get(col).containsKey(symbol)) {
+            colSymbolCounts.get(col).put(symbol, 0);
         }
         // update the value by one if the same col having the character...
-        colSymbolCounts.get(row).put(symbol, colSymbolCounts.get(row).get(symbol)+1);
+        colSymbolCounts.get(col).put(symbol, colSymbolCounts.get(col).get(symbol)+1);
 
         //Updating the top left diagonal values
         if(row == col) {
             if(!topLeftDiagonalSymbolCounts.containsKey(symbol)) {
-                System.out.println("TopLeft hashmap is called...");
                 topLeftDiagonalSymbolCounts.put(symbol, 0);
             }
             // update the value by one if the same col having the character...
@@ -57,7 +54,6 @@ public class OrderOneWinningStrategy implements GameWinningStrategy{
         //Updating the bottomRight values
         if(row+col == dimension-1) {
             if(!topRightDiagonalSymbolCounts.containsKey(symbol)) {
-                System.out.println("TopRight hashmap is called...");
                 topRightDiagonalSymbolCounts.put(symbol, 0);
             }
             // update the value by one if the same col having the character...

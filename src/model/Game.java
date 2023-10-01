@@ -78,7 +78,7 @@ public class Game {
         Player playerWhoMoveItis = players.get(nextPlayerIndex);
         System.out.println("It is " +playerWhoMoveItis.getName() + "'s turn");
 
-        Move move = playerWhoMoveItis.decideMove();
+        Move move = playerWhoMoveItis.decideMove(board);
 
         int row = move.getCell().getRow();
         int col = move.getCell().getCol();
