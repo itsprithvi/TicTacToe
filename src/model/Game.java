@@ -93,6 +93,11 @@ public class Game {
                 winningPlayer = playerWhoMoveItis;
             }
 
+            // DRAW 
+            if(moves.size() == board.getSize()*board.getSize()) {
+                gameStatus = GameStatus.DRAW;
+            }
+
             nextPlayerIndex += 1;
             nextPlayerIndex %= players.size();
         } else {
